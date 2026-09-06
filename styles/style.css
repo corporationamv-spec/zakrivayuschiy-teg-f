@@ -1,16 +1,305 @@
-/* Здесь вы напишете основную часть стилей страницы.
-
-Будьте внимательны! Для корректной работы скриптов на этом сайте нужно, чтобы в HTML некоторые классы были названы особым образом:
-✦ like-icon — для svg-иконки анимированного сердца
-✦ card__like-button — для кнопки Like рядом с иконкой
-✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ is-liked — для обозначения состояния лайкнутой иконки в виде сердца
-✦ button__text — для обозначения текстового элемента внутри кнопки
-
-*/
-
 .page {
   min-inline-size: 320px;
   min-block-size: 100dvb;
+  padding-block: 100px;
+  color: var(--accent-color, #000);
+  font-family: var(--main-font, sans-serif);
+  font-size: 18px;
+  font-variation-settings: 'wght' var(--text-weight, 410);
+  background-color: var(--background-color, #fff);
+  background-image: var(--page-background);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.content-width {
+  inline-size: var(--content-width, 100%);
+  max-inline-size: 100%;
+  margin-inline: auto;
+}
+
+.header {
+  margin-block-end: 100px;
+  border: 2px solid var(--accent-color, #000);
+  padding-block: var(--header-padding, 120px);
+  background-color: var(--background-color, #fff);
+  font-family: var(--accent-font, fantasy);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.header__logo {
+  font-size: clamp(49px, 43.366px + 1.502vw, 65px);
+  line-height: 1;
+}
+
+.header__title {
+  margin-block-start: 20px;
+  font-size: clamp(14px, 10.831px + 0.845vw, 23px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.card {
+  inline-size: 100%;
+  border: 2px solid var(--accent-color, #000);
+  background-color: var(--background-color, #fff);
+}
+
+.card__title {
+  padding: 4px 10px;
+  font-size: 18px;
+  font-variation-settings: 'wght' var(--heading-weight, 715);
+  line-height: 22px;
+  overflow-wrap: break-word;
+}
+
+.card__image-wrapper {
+  position: relative;
+  border-block: 2px solid var(--accent-color, #000);
+  overflow: hidden;
+}
+
+.card__image {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card__image_filter_original {
+  filter: brightness(1);
+}
+
+.card__image_filter_muted {
+  filter: grayscale(0.8);
+}
+
+.card__image_filter_vivid {
+  filter: saturate(4);
+}
+
+.card__image_filter_warm {
+  filter: hue-rotate(25deg);
+}
+
+.card__image_filter_hue {
+  filter: invert(0.75);
+}
+
+.card__image_filter_sepia {
+  filter: sepia(0.9);
+}
+
+.card__image_filter_blur {
+  filter: blur(10px);
+}
+
+.card__image_filter_mixed {
+  filter: hue-rotate(90deg) opacity(0.6) sepia(0.4);
+}
+
+.card__label {
+  position: absolute;
+  inset-block-start: 23px;
+  inset-inline-end: 23px;
+  max-inline-size: calc(100% - 46px);
+  opacity: 0.5;
+  font-family: var(--accent-font, fantasy);
+  font-size: 14px;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow:
+    -1px 0 var(--label-stroke-color, #fff),
+    1px 0 var(--label-stroke-color, #fff),
+    0 -1px var(--label-stroke-color, #fff),
+    0 1px var(--label-stroke-color, #fff);
+  mix-blend-mode: hard-light;
+}
+
+@supports ((text-stroke: 1px white) or (-webkit-text-stroke: 1px white)) {
+  .card__label {
+    -webkit-text-stroke: 1px var(--label-stroke-color, #fff);
+    text-stroke: 1px var(--label-stroke-color, #fff);
+    text-shadow: none;
+  }
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 25px;
+  line-height: calc(21 / 18);
+}
+
+.card__actions {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  gap: 4px;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-block-size: 38px;
+  border: 2px solid var(--accent-color, #000);
+  padding: 9px 17px;
+  overflow: hidden;
+  background-color: var(--background-color, #fff);
+  font-family: var(--accent-font, fantasy);
+  font-size: 14px;
+  line-height: 0.9;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--accent-color, #000);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s ease-in-out;
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+}
+
+.button:focus,
+.card__icon-button:focus {
+  outline: none;
+}
+
+.button:focus-visible {
+  box-shadow: 2px 2px 0 var(--accent-color, #000);
+}
+
+.button__text,
+.save-button__icon {
+  position: relative;
+  color: var(--button-text-color, #fff);
+  mix-blend-mode: difference;
+}
+
+.card__like-button {
+  inline-size: 130px;
+}
+
+.card__icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: 39px;
+  block-size: 38px;
+  border: 2px solid transparent;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.card__icon-button:focus-visible {
+  border-color: var(--accent-color, #000);
+}
+
+.like-icon {
+  flex-shrink: 0;
+}
+
+.save-button {
+  gap: 8px;
+  max-inline-size: calc(100% - 32px);
+  min-block-size: 55px;
+  padding: 15px 18px;
+  line-height: 1;
+}
+
+.save-button__icon {
+  flex-shrink: 0;
+  inline-size: 21px;
+  block-size: 21px;
+}
+
+.dialog {
+  inline-size: 353px;
+  max-inline-size: calc(100% - 34px);
+  border: 2px solid var(--accent-color, #000);
+  padding: 28px;
+  color: var(--accent-color, #000);
+  background-color: var(--background-color, #fff);
+}
+
+.dialog:not([open]) {
+  display: none;
+}
+
+.dialog[open] {
+  display: grid;
+  grid-template-columns: 39px 1fr;
+  align-items: center;
+  gap: 30px 20px;
+}
+
+.dialog::backdrop {
+  background-color: rgb(0 0 0 / 0.75);
+}
+
+.dialog__icon {
+  inline-size: 39px;
+  block-size: 39px;
+}
+
+.dialog__text {
+  font-family: var(--accent-font, fantasy);
+  font-size: 14px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.dialog__form {
+  grid-column: 1 / -1;
+}
+
+.dialog__button {
+  inline-size: 100%;
+  text-transform: uppercase;
+}
+
+@media (width <= 375px) {
+  .header__logo {
+    font-size: clamp(40px, 13.067vw, 49px);
+  }
+
+  .card__label {
+    inset-inline-end: 11px;
+  }
+
+  .save-button {
+    flex-direction: column;
+    min-block-size: 84px;
+  }
+
+  .save-button__icon {
+    inline-size: 28px;
+    block-size: 28px;
+  }
+
+  .dialog {
+    padding-inline: 38px;
+  }
 }
