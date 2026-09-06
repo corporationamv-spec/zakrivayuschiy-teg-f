@@ -1,1 +1,1 @@
-https://github.com/corporationamv-spec/zakrivayuschiy-teg-f
+Готово https://github.com/corporationamv-spec/zakrivayuschiy-teg-f
